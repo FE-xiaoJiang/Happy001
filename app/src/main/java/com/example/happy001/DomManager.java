@@ -29,17 +29,30 @@ public class DomManager {
         mRenderNodes = new SparseArray<>();
         renderManager = new RenderManager();
     }
-    public void createNode(int pid, int id, Context context) throws JSONException {
+    public void createNode(int pid, int id, JSONObject props, Context context) throws JSONException {
         // 创建节点
 
         // 触发渲染vsync
         this.addDispatchTask(new IDomExecutor() {
             @Override
             public void exec() {
-                renderManager.createNode(pid, id, context);
+                renderManager.createNode(pid, id, props, context);
             }
         });
     }
+
+    public void updateNode(int pid, int id, JSONObject newProps, Context context) throws JSONException {
+        // 创建节点
+
+        // 触发渲染vsync
+        this.addDispatchTask(new IDomExecutor() {
+            @Override
+            public void exec() {
+                renderManager.updateNode(pid, id, newProps, context);
+            }
+        });
+    }
+
     public void addDispatchTask(IDomExecutor exector) {
         mDispatchRunnable.add(exector);
         if (!mIsDispatchUIFrameCallbackEnqueued) {

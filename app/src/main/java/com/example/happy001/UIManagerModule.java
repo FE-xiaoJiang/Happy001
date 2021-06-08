@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 public class UIManagerModule {
     private DomManager domManager;
     public UIManagerModule() {
@@ -14,10 +16,21 @@ public class UIManagerModule {
     public void createNode(JSONArray _params, Context context) throws JSONException {
         // 批量创建节点
         for (int i = 0; i < _params.length(); i++) {
-            JSONObject nodeParam = _params.getJSONObject(0);
+            JSONObject nodeParam = _params.getJSONObject(i);
             int pid = nodeParam.getInt("pid");
             int id = nodeParam.getInt("id");
-            domManager.createNode(pid, id, context);
+            JSONObject props = nodeParam.getJSONObject("props");
+            domManager.createNode(pid, id, props, context);
+        }
+    }
+    public void updateNode(JSONArray _params, Context context) throws JSONException {
+        // 批量创建节点
+        for (int i = 0; i < _params.length(); i++) {
+            JSONObject nodeParam = _params.getJSONObject(i);
+            int pid = nodeParam.getInt("pid");
+            int id = nodeParam.getInt("id");
+            JSONObject props = nodeParam.getJSONObject("props");
+            domManager.updateNode(pid, id, props, context);
         }
     }
 }

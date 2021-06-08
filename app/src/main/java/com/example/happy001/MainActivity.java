@@ -12,6 +12,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.litho.ComponentContext;
+import com.facebook.litho.LithoView;
+import com.facebook.litho.widget.Text;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,11 +31,13 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
-    private UIManagerModule uiManagerModule;
+    private UIManagerModule uiManagerModule = new UIManagerModule();
+    ComponentContext cContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        cContext = new ComponentContext(this);
         setContentView(R.layout.activity_main);
 
         // Example of a call to a native method
@@ -39,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
         tv.setText(stringFromJNI());
         ConstraintLayout cl = findViewById(R.id.rootview);
         LayoutInflater inflater = getLayoutInflater();
-        View myView = new MyView(this);
+//        View myView = new MyView(this);
 //        View myView = inflater.inflate(R.layout.sample_my_view, null);
 //        LinearLayout.LayoutParams myViewLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, getPixelsFromDp(500));
 //        myView.setLayoutParams(myViewLp);
-        cl.addView(myView);
+//        cl.addView(myView);
         LayoutManager.getInstance().setLayout(cl); // 父布局管理
+//        LithoView rootLithoView = new LithoView(this);
+//        setContentView(rootLithoView);
 
         initJSFramework();
         String filePath = "index.android.js";// "asset:/index.android.js";
@@ -91,8 +99,11 @@ public class MainActivity extends AppCompatActivity {
             } else if (_params instanceof JSONArray){
                 JSONArray _paramsArr = (JSONArray) _params;
                 Log.d("TAG", "js2nativeFun: "+ moduleName + " " + moduleFunc + " " + callId + " " + _paramsArr);
-                if (moduleName == "UIManagerModule" && moduleFunc == "createNode") {
+                if ("UIManagerModule".equals(moduleName) && "createNode".equals(moduleFunc)) {
                     uiManagerModule.createNode(_paramsArr, this);
+                } else if ("UIManagerModule".equals(moduleName) && "updateNode".equals(moduleFunc)) {
+//                    Thread.sleep(5000);
+                    uiManagerModule.updateNode(_paramsArr, this);
                 }
             }
         } catch (JSONException e) {
