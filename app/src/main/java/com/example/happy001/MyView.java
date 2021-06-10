@@ -1,6 +1,7 @@
 package com.example.happy001;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -26,6 +27,13 @@ public class MyView extends View {
     public MyView(Context context) {
         super(context);
         init(null, 0);
+        this.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SubActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     public MyView(Context context, AttributeSet attrs) {

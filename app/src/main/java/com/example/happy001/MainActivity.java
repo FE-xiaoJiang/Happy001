@@ -27,11 +27,12 @@ import java.io.InputStream;
 public class MainActivity extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("native-lib");
-    }
+//    static {
+//        System.loadLibrary("native-lib");
+//    }
 
     private UIManagerModule uiManagerModule = new UIManagerModule();
+    private Engine engine;
     ComponentContext cContext;
 
     @Override
@@ -39,10 +40,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         cContext = new ComponentContext(this);
         setContentView(R.layout.activity_main);
+        engine = new Engine(this);
 
         // Example of a call to a native method
         TextView tv = findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
+        tv.setText(engine.stringFromJNI());
         ConstraintLayout cl = findViewById(R.id.rootview);
         LayoutInflater inflater = getLayoutInflater();
 //        View myView = new MyView(this);
@@ -54,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
 //        LithoView rootLithoView = new LithoView(this);
 //        setContentView(rootLithoView);
 
-        initJSFramework();
+        engine.initJSFramework();
         String filePath = "index.android.js";// "asset:/index.android.js";
         String _source = getJsFileSource(filePath);
         Log.d("js_source", _source);
-        String result = runScriptFromUri(filePath, _source);
+        String result = engine.runScriptFromUri(filePath, _source);
         Log.d("script result", result);
     }
 
@@ -89,33 +91,33 @@ public class MainActivity extends AppCompatActivity {
         return source;
     }
 
-    public void js2nativeFun(String moduleName, String moduleFunc, String callId, byte[] params) {
-        Object _params = null;
-        try {
-            _params = new JSONTokener(new String(params)).nextValue();
-            if (_params instanceof JSONObject) {
-                JSONObject _paramsObj = (JSONObject) _params;
-                Log.d("TAG", "js2nativeFun: "+ moduleName + " " + moduleFunc + " " + callId + " " + _paramsObj);
-            } else if (_params instanceof JSONArray){
-                JSONArray _paramsArr = (JSONArray) _params;
-                Log.d("TAG", "js2nativeFun: "+ moduleName + " " + moduleFunc + " " + callId + " " + _paramsArr);
-                if ("UIManagerModule".equals(moduleName) && "createNode".equals(moduleFunc)) {
-                    uiManagerModule.createNode(_paramsArr, this);
-                } else if ("UIManagerModule".equals(moduleName) && "updateNode".equals(moduleFunc)) {
-//                    Thread.sleep(5000);
-                    uiManagerModule.updateNode(_paramsArr, this);
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void js2nativeFun(String moduleName, String moduleFunc, String callId, byte[] params) {
+//        Object _params = null;
+//        try {
+//            _params = new JSONTokener(new String(params)).nextValue();
+//            if (_params instanceof JSONObject) {
+//                JSONObject _paramsObj = (JSONObject) _params;
+//                Log.d("TAG", "js2nativeFun: "+ moduleName + " " + moduleFunc + " " + callId + " " + _paramsObj);
+//            } else if (_params instanceof JSONArray){
+//                JSONArray _paramsArr = (JSONArray) _params;
+//                Log.d("TAG", "js2nativeFun: "+ moduleName + " " + moduleFunc + " " + callId + " " + _paramsArr);
+//                if ("UIManagerModule".equals(moduleName) && "createNode".equals(moduleFunc)) {
+//                    uiManagerModule.createNode(_paramsArr, this);
+//                } else if ("UIManagerModule".equals(moduleName) && "updateNode".equals(moduleFunc)) {
+////                    Thread.sleep(5000);
+//                    uiManagerModule.updateNode(_paramsArr, this);
+//                }
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    public native String stringFromJNI();
-    public native void initJSFramework();
-    public native String runScriptFromUri(String file, String jsSource);
+//    public native String stringFromJNI();
+//    public native void initJSFramework();
+//    public native String runScriptFromUri(String file, String jsSource);
 }

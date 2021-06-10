@@ -17,7 +17,7 @@ void happyLog(std::string tag, std::string log1, std::string log2) {
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_example_happy001_MainActivity_stringFromJNI(
+Java_com_example_happy001_Engine_stringFromJNI(
         JNIEnv* env,
         jobject /* this */) {
     std::string hello = "Hello from C++";
@@ -30,17 +30,20 @@ jobject j_obj_;
 v8::Local<v8::Context> context_;
 //
 extern "C" JNIEXPORT void JNICALL
-Java_com_example_happy001_MainActivity_initJSFramework(
+Java_com_example_happy001_Engine_initJSFramework(
         JNIEnv* env,
         jobject j_obj) {
     env_ = env;
     j_obj_ = env->NewGlobalRef(j_obj); // **重要，局部转全局
-    v8::Platform *platform = v8::platform::CreateDefaultPlatform();
-    v8::V8::InitializePlatform(platform, true);
-    v8::V8::Initialize();
-    v8::Isolate::CreateParams create_params;
-    create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
-    isolate_ = v8::Isolate::New(create_params);
+    if (isolate_ == nullptr) {
+        v8::Platform *platform = v8::platform::CreateDefaultPlatform();
+        v8::V8::InitializePlatform(platform, true);
+        v8::V8::Initialize();
+        v8::Isolate::CreateParams create_params;
+        create_params.array_buffer_allocator = v8::ArrayBuffer::Allocator::NewDefaultAllocator();
+        isolate_ = v8::Isolate::New(create_params);
+    }
+
     v8::Isolate::Scope isolate_scope(isolate_);
     v8::HandleScope handle_scope(isolate_);
 }
@@ -157,7 +160,7 @@ static void callNative(void* data) {
 //            JNIEnvironment::GetInstance()->wrapper_.call_natives_method_id,
 //            j_module_name, j_module_func, j_cb_id, j_params_str);
     jclass hippy_bridge_cls =
-            env_->FindClass("com/example/happy001/MainActivity");
+            env_->FindClass("com/example/happy001/Engine");
     jmethodID call_natives_method_id = env_->GetMethodID(hippy_bridge_cls, "js2nativeFun", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[B)V");
 //    RegisterNativeBinding=>fn_template=>NativeCallbackFunc=>fn_
 //    std::function<void(void*)>
@@ -207,7 +210,7 @@ void RegisterNativeBinding(const std::string& name, std::function<void(void *)> 
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_example_happy001_MainActivity_runScriptFromUri(
+Java_com_example_happy001_Engine_runScriptFromUri(
         JNIEnv *env,
         jobject j_obj,
         jstring j_uri,
