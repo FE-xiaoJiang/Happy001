@@ -101,7 +101,7 @@ public class MyView extends View {
 
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
-
+//        this.setBackgroundColor(Color.rgb(0, 0, 0));
         // Draw the text.
         canvas.drawText(mExampleString,
                 paddingLeft + (contentWidth - mTextWidth) / 2,

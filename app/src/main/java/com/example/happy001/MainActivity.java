@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.litho.ComponentContext;
@@ -45,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         // Example of a call to a native method
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(engine.stringFromJNI());
-        ConstraintLayout cl = findViewById(R.id.rootview);
+//        ConstraintLayout cl = findViewById(R.id.rootview);
+        RelativeLayout cl = findViewById(R.id.rootview);
         LayoutInflater inflater = getLayoutInflater();
 //        View myView = new MyView(this);
 //        View myView = inflater.inflate(R.layout.sample_my_view, null);

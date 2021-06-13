@@ -67,11 +67,14 @@ char* getFileSource(JNIEnv *env, jstring j_uri) {
 
 void registerGlobalInJs(v8::Local<v8::Context> context) {
     v8::HandleScope handle_scope(isolate_);
-//    v8::Local<v8::Context> context = v8::Context::New(isolate_);
     v8::Context::Scope context_scope(context);
     v8::Local<v8::Object> global = context->Global();
-//    v8::Local<v8::Value> gobj = v8::Object::New(isolate_);
-    global->Set(context,v8::String::NewFromUtf8(isolate_, "global", v8::NewStringType::kNormal).FromMaybe(v8::Local<v8::String>()), global);
+    global->Set(context,
+            v8::String::NewFromUtf8(
+                    isolate_,
+                    "global",
+                    v8::NewStringType::kNormal).FromMaybe(v8::Local<v8::String>()),
+            global);
 }
 
 // native2js
@@ -79,7 +82,10 @@ v8::Local<v8::Function> getJsFun(const std::string& name, v8::Local<v8::Context>
     happyLog("hippy::Debug", "GetJsFn name = %s", name.c_str());
     v8::HandleScope handle_scope(isolate_);
     v8::Context::Scope context_scope(context);
-    v8::Local<v8::String> js_name = v8::String::NewFromUtf8(isolate_, name.c_str(), v8::NewStringType::kNormal).FromMaybe(v8::Local<v8::String>());
+    v8::Local<v8::String> js_name = v8::String::NewFromUtf8(
+            isolate_,
+            name.c_str(),
+            v8::NewStringType::kNormal).FromMaybe(v8::Local<v8::String>());
     v8::Local<v8::Function> js_fn = v8::Local<v8::Function>::Cast(context->Global()->Get(js_name));
     v8::Handle<v8::Value> handle_value =
             v8::Handle<v8::Value>::New(isolate_, js_fn);
@@ -162,8 +168,6 @@ static void callNative(void* data) {
     jclass hippy_bridge_cls =
             env_->FindClass("com/example/happy001/Engine");
     jmethodID call_natives_method_id = env_->GetMethodID(hippy_bridge_cls, "js2nativeFun", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[B)V");
-//    RegisterNativeBinding=>fn_template=>NativeCallbackFunc=>fn_
-//    std::function<void(void*)>
     env_->CallVoidMethod(j_obj_, call_natives_method_id, j_module_name, j_module_func, j_cb_id, j_params_str);
 }
 

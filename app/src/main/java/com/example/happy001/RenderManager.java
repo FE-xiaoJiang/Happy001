@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 public class RenderManager {
     ArrayList<RenderNode> mRenderNodes;
@@ -42,13 +44,6 @@ public class RenderManager {
         for (int i = 0; i < mRenderNodes.size(); i++) {
             RenderNode uiNode = mRenderNodes.get(i);
             uiNode.update();
-            MyView _v = uiNode.myView;
-            Log.d("========", mRenderNodes.size()+" "+500 * (i + 1) + "count:"+ count);
-            ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(
-                    200 + 400 * (i + 1), 200 * (count)
-            );
-            _v.setLayoutParams(layoutParams);
-            layout.addView(_v);
         }
     }
 }

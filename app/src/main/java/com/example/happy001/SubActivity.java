@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
+import android.widget.RelativeLayout;
 
 public class SubActivity extends AppCompatActivity {
 
@@ -15,7 +16,8 @@ public class SubActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub);
-        ConstraintLayout cl = findViewById(R.id.subactivity);
+//        ConstraintLayout cl = findViewById(R.id.subactivity);
+        RelativeLayout cl = findViewById(R.id.rootview);
         LayoutManager.getInstance().setLayout(cl); // 父布局管理
         engine = new Engine(this);
 
