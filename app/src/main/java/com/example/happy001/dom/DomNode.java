@@ -1,4 +1,4 @@
-package com.example.happy001;
+package com.example.happy001.dom;
 
 public class DomNode {
     int pid;

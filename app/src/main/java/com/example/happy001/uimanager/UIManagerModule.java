@@ -1,12 +1,12 @@
-package com.example.happy001;
+package com.example.happy001.uimanager;
 
 import android.content.Context;
+
+import com.example.happy001.dom.DomManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Map;
 
 public class UIManagerModule {
     private DomManager domManager;

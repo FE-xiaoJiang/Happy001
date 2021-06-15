@@ -1,9 +1,10 @@
-package com.example.happy001;
+package com.example.happy001.uimanager;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.widget.RelativeLayout;
 
+import com.example.happy001.views.MyView;
 import com.facebook.litho.LithoView;
 
 import org.json.JSONException;

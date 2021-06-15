@@ -1,38 +1,11 @@
-package com.example.happy001;
-
-import android.view.Choreographer;
+package com.example.happy001.uimanager;
 
 import java.util.ArrayDeque;
 
-public class ChoregrapherManager {
-    private static ChoregrapherManager instance;
-    static ChoregrapherManager getInstance() {
-        if (null == instance) {
-            instance = new ChoregrapherManager();
-        }
-        return instance;
-    }
-    public void postFrameCallback(final HappyChoregrapherManager.FrameCallback callback)
-    {
-        Choreographer.FrameCallback frameCallback = new Choreographer.FrameCallback()
-        {
-            @Override
-            public void doFrame(long frameTimeNanos)
-            {
-                if (callback != null)
-                {
-                    callback.doFrame(frameTimeNanos);
-                }
-            }
-        };
-        Choreographer.getInstance().postFrameCallback(frameCallback);
-    }
-}
-
-class HappyChoregrapherManager {
+public class HappyChoregrapherManager {
     boolean	mHasPostedCallback	= false;
     HappyChoreographerDispatcher happyChoreographerDispatcher;
-    HappyChoregrapherManager() {
+    public HappyChoregrapherManager() {
         this.mCallbackQueues = new ArrayDeque<>();
         this.happyChoreographerDispatcher = new HappyChoreographerDispatcher();
     }

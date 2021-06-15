@@ -1,13 +1,12 @@
 package com.example.happy001;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.widget.RelativeLayout;
+
+import com.example.happy001.uimanager.LayoutManager;
 
 public class SubActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.happy001;
+package com.example.happy001.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.graphics.drawable.Drawable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.example.happy001.SubActivity;
 
 /**
  * TODO: document your custom view class.

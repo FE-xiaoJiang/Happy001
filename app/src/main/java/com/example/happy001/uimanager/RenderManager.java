@@ -1,18 +1,10 @@
-package com.example.happy001;
+package com.example.happy001.uimanager;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
-import android.util.SparseArray;
-import android.view.View;
-import android.widget.RelativeLayout;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 public class RenderManager {
     ArrayList<RenderNode> mRenderNodes;
@@ -40,7 +32,6 @@ public class RenderManager {
         return null;
     }
     public void batch() {
-        LayoutManager layout = LayoutManager.getInstance();
         for (int i = 0; i < mRenderNodes.size(); i++) {
             RenderNode uiNode = mRenderNodes.get(i);
             uiNode.update();

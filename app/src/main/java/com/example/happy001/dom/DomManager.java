@@ -1,9 +1,12 @@
-package com.example.happy001;
+package com.example.happy001.dom;
 
 import android.content.Context;
 import android.util.SparseArray;
 
-import org.json.JSONArray;
+import com.example.happy001.uimanager.HappyChoregrapherManager;
+import com.example.happy001.uimanager.RenderManager;
+import com.example.happy001.uimanager.RenderNode;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
